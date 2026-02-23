@@ -34,7 +34,7 @@ linters:
     - gofmt
     - gosimple
     - staticcheck
-    - asasalint
+    - errcheck
     - asciicheck
     - bidichk
     - bodyclose

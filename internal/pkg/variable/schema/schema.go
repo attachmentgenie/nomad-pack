@@ -30,4 +30,22 @@ var VariableBlockSchema = &hcl.BodySchema{
 		{Name: VariableAttributeDefault},
 		{Name: VariableAttributeType},
 	},
+	Blocks: []hcl.BlockHeaderSchema{
+		{
+			Type: "validation",
+		},
+	},
+}
+
+var VariableValidationBlockSchema = &hcl.BodySchema{
+	Attributes: []hcl.AttributeSchema{
+		{
+			Name:     "condition",
+			Required: true,
+		},
+		{
+			Name:     "error_message",
+			Required: true,
+		},
+	},
 }

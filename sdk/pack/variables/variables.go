@@ -50,8 +50,34 @@ type Variable struct {
 	// value into a Go type value.
 	Value cty.Value
 
+	// Validations contains all variables validation rules to be applied to the
+	// used value. Only the used value - the last value from Values - is
+	// validated.
+	Validations []*VariableValidation
+
 	// DeclRange is the position marker of the variable within the file it was
 	// read from. This is used for diagnostics.
+	DeclRange hcl.Range
+}
+
+// VariableValidation represents a configuration-defined validation rule
+// for a particular input variable, given as a "validation" block inside
+// a "variable" block.
+type VariableValidation struct {
+	// Condition is an expression that refers to the variable being tested and
+	// contains no other references. The expression must return true to
+	// indicate that the value is valid or false to indicate that it is
+	// invalid. If the expression produces an error, that's considered a bug in
+	// the block defining the validation rule, not an error in the caller.
+	Condition hcl.Expression
+
+	// ErrorMessage is one or more full sentences, which _should_ be in English
+	// for consistency with the rest of the error message output but can in
+	// practice be in any language as long as it ends with a period. The
+	// message should describe what is required for the condition to return
+	// true in a way that would make sense to a caller of the module.
+	ErrorMessage string
+
 	DeclRange hcl.Range
 }
 
